@@ -43,3 +43,29 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
 // На странице расписания подсвечиваем сегодняшний день.
 document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");
+
+// Запуск главной: три части видео спускаются сверху по очереди, затем появляется название.
+const hero = document.querySelector(".hero"), heroVideo = document.querySelector(".hero-video");
+if (hero && matchMedia("(prefers-reduced-motion: reduce)").matches) hero.classList.add("ready");
+else if (hero) {
+  const start = () => {
+    const W = hero.clientWidth, H = hero.clientHeight, phone = innerWidth <= 700;
+    // Границы колонок в кадре 1920×960 с учётом обрезки object-fit: cover.
+    const k = Math.max(W / 1920, H / 960), ox = (W - 1920 * k) / 2;
+    const cuts = phone ? [0, W] : [0, ox + 638 * k, ox + 1282 * k, W];
+    const drops = cuts.slice(1).map((r, i) => {
+      const v = heroVideo.cloneNode(true);
+      v.className = "hero-drop"; v.muted = true; v.removeAttribute("aria-label"); v.setAttribute("aria-hidden", "true");
+      v.style.clipPath = `inset(0 ${W - r}px 0 ${cuts[i]}px)`;
+      v.style.animationDelay = `${i * .38}s`;
+      heroVideo.after(v); v.play().catch(() => {});
+      return v;
+    });
+    const total = 1150 + (drops.length - 1) * 380;
+    const title = hero.querySelector(".hero-text");
+    setTimeout(() => { title.style.opacity = 1; title.style.transform = "none"; }, total - 250);
+    setTimeout(() => { try { heroVideo.currentTime = drops[0].currentTime; } catch {} hero.classList.add("ready"); title.removeAttribute("style"); }, total + 650);
+    setTimeout(() => drops.forEach((v) => v.remove()), total + 850);
+  };
+  if (heroVideo.readyState >= 2) start(); else { let done = false; const go = () => { if (!done) { done = true; start(); } }; heroVideo.addEventListener("loadeddata", go, { once: true }); setTimeout(go, 1500); }
+}

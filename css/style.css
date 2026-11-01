@@ -335,3 +335,4 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
   .stage-text .who { font-size: 17px; line-height: 1.25; }
   .stage-text .btn { padding: 11px 18px; font-size: 17px; white-space: nowrap; }
 }
+@media (min-width: 1001px) { .stage { top: 0; } }

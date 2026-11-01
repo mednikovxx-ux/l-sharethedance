@@ -44,32 +44,38 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 // На странице расписания подсвечиваем сегодняшний день.
 document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");
 
-// Запуск главной: кадры спускаются сверху по очереди и встают в ряд, затем оживают и появляется название.
+// Запуск главной: колонки живого видео спускаются сверху по очереди и встают в ряд.
+// Все колонки рисуются на холсте из одного идущего видео, поэтому они играют уже в полёте и не расходятся.
 const hero = document.querySelector(".hero"), heroVideo = document.querySelector(".hero-video");
 if (hero) {
-  const phone = innerWidth <= 700, frame = new Image();
-  heroVideo.pause();
-  const start = () => {
-    const W = hero.clientWidth, H = hero.clientHeight;
-    // Границы колонок в кадре 1920×960 с учётом обрезки object-fit: cover.
-    const k = Math.max(W / 1920, H / 960), ox = (W - 1920 * k) / 2;
-    const cuts = phone ? [0, W] : [0, ox + 638 * k, ox + 1282 * k, W];
-    const drops = cuts.slice(1).map((r, i) => {
-      const im = new Image();
-      im.src = frame.src; im.alt = ""; im.className = "hero-drop";
-      im.style.clipPath = `inset(0 ${W - r}px 0 ${cuts[i]}px)`;
-      im.style.animationDelay = `${i * .6}s`;
-      heroVideo.after(im);
-      return im;
-    });
-    const total = 1400 + (drops.length - 1) * 600;
-    setTimeout(() => {
-      try { heroVideo.currentTime = 0; } catch {}
-      heroVideo.play().catch(() => {});
-      hero.classList.add("ready");
-      setTimeout(() => drops.forEach((d) => d.remove()), 500);
-    }, total);
-  };
-  frame.onload = frame.onerror = start;
+  const phone = innerWidth <= 700, frame = new Image(), FALL = 1400, STEP = 600;
   frame.src = phone ? "img/hero-tall-0.jpg" : "img/hero-wide-0.jpg";
+  const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  canvas.className = "hero-canvas"; canvas.setAttribute("aria-hidden", "true");
+  heroVideo.after(canvas);
+  const size = () => { canvas.width = hero.clientWidth * dpr; canvas.height = hero.clientHeight * dpr; };
+  size(); ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const VW = phone ? 720 : 1920, VH = phone ? 1280 : 960, cols = phone ? [0, 720] : [0, 638, 1282, 1920];
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const run = () => {
+    const t0 = performance.now(), W = canvas.width, H = canvas.height, k = Math.max(W / VW, H / VH), ox = (W - VW * k) / 2, oy = (H - VH * k) / 2;
+    const total = FALL + (cols.length - 2) * STEP;
+    const draw = (now) => {
+      const src = heroVideo.readyState >= 2 ? heroVideo : frame, t = now - t0;
+      ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, W, H);
+      for (let i = 0; i < cols.length - 1; i++) {
+        const p = ease(Math.min(1, Math.max(0, (t - i * STEP) / FALL)));
+        if (p > 0) ctx.drawImage(src, cols[i], 0, cols[i + 1] - cols[i], VH, ox + cols[i] * k, oy - (1 - p) * H, (cols[i + 1] - cols[i]) * k, VH * k);
+      }
+      if (t < total) requestAnimationFrame(draw);
+      else { hero.classList.add("ready"); setTimeout(() => canvas.remove(), 400); }
+    };
+    requestAnimationFrame(draw);
+  };
+  // Ждём, пока видео реально пойдёт; если сеть медленная, начинаем с первого кадра и подхватываем видео на лету.
+  let started = false; const go = () => { if (!started) { started = true; run(); } };
+  heroVideo.addEventListener("playing", go, { once: true });
+  heroVideo.play().catch(() => {});
+  setTimeout(go, 2500);
 }

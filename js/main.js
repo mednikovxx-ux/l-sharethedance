@@ -44,41 +44,24 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 // На странице расписания подсвечиваем сегодняшний день.
 document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");
 
-// Запуск главной: колонки живого видео спускаются сверху по очереди и встают в ряд.
-// Все колонки рисуются на холсте из одного идущего видео, поэтому они играют уже в полёте и не расходятся.
-const hero = document.querySelector(".hero"), heroVideo = document.querySelector(".hero-video");
+// Запуск главной: каждое видео запускается и сразу выезжает сверху, следующее — за ним.
+const hero = document.querySelector(".hero");
 if (hero) {
-  const phone = innerWidth <= 700, frame = new Image(), FALL = 1000, STEP = 300;
-  frame.src = phone ? "img/hero-tall-0.jpg" : "img/hero-wide-0.jpg";
-  const canvas = document.getElementById("heroCanvas"), ctx = canvas.getContext("2d");
-  const dpr = Math.min(devicePixelRatio || 1, 2);
-  const size = () => { canvas.width = hero.clientWidth * dpr; canvas.height = hero.clientHeight * dpr; };
-  size(); ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-  const VW = phone ? 720 : 1920, VH = phone ? 1280 : 960, cols = phone ? [0, 720] : [0, 638, 1282, 1920];
-  const ease = (t) => 1 - Math.pow(1 - t, 3);
-  const run = () => {
-    const t0 = performance.now(), W = canvas.width, H = canvas.height, k = Math.max(W / VW, H / VH), ox = (W - VW * k) / 2, oy = (H - VH * k) / 2;
-    const total = FALL + (cols.length - 2) * STEP;
-    const draw = (now) => {
-      const src = heroVideo.readyState >= 2 && heroVideo.currentTime > 0 ? heroVideo : frame, t = now - t0;
-      ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, W, H);
-      for (let i = 0; i < cols.length - 1; i++) {
-        const p = ease(Math.min(1, Math.max(0, (t - i * STEP) / FALL)));
-        if (p > 0) ctx.drawImage(src, cols[i], 0, cols[i + 1] - cols[i], VH, ox + cols[i] * k, oy - (1 - p) * H, (cols[i + 1] - cols[i]) * k, VH * k);
-      }
-      if (t > total - 500) hero.classList.add("title");
-      if (t < total) requestAnimationFrame(draw);
-      else { hero.classList.add("ready"); heroVideo.play().catch(() => {}); setTimeout(() => canvas.remove(), 150); }
-    };
-    requestAnimationFrame(draw);
-  };
-  // Стартуем, как только видео реально пошло, но не позже чем через 1,5 секунды.
-  let started = false; const go = () => { if (!started) { started = true; run(); } };
-  heroVideo.addEventListener("playing", go, { once: true });
-  heroVideo.play().catch(() => {});
-  heroVideo.addEventListener("timeupdate", go, { once: true });
-  setTimeout(go, 1500);
-  // Если браузер приостановил видео или ему не хватило загрузки, продолжаем воспроизведение.
-  ["pause", "stalled", "waiting"].forEach((e) => heroVideo.addEventListener(e, () => setTimeout(() => { if (heroVideo.paused && !document.hidden) heroVideo.play().catch(() => {}); }, 250)));
-  document.addEventListener("visibilitychange", () => { if (!document.hidden) heroVideo.play().catch(() => {}); });
+  const phone = innerWidth <= 700, vids = [...hero.querySelectorAll(".hc")].slice(0, phone ? 1 : 3);
+  const STEP = 300, FALL = 1000, still2 = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const launch = (v) => { v.play().catch(() => {}); v.classList.add("in"); };
+  const whenReady = (v) => new Promise((res) => {
+    if (v.readyState >= 3) return res();
+    v.addEventListener("canplay", res, { once: true }); setTimeout(res, 1500);
+  });
+  if (still2) { vids.forEach((v) => { v.style.transition = "none"; launch(v); }); hero.classList.add("title", "ready"); }
+  else (async () => {
+    await Promise.all(vids.map(whenReady));
+    vids.forEach((v, i) => setTimeout(() => launch(v), i * STEP));
+    setTimeout(() => hero.classList.add("title", "ready"), (vids.length - 1) * STEP + FALL - 500);
+  })();
+  // Если браузер приостановил видео, продолжаем воспроизведение.
+  const resume = () => vids.forEach((v) => { if (v.paused && v.classList.contains("in") && !document.hidden) v.play().catch(() => {}); });
+  vids.forEach((v) => ["pause", "stalled"].forEach((e) => v.addEventListener(e, () => setTimeout(resume, 250))));
+  document.addEventListener("visibilitychange", resume);
 }

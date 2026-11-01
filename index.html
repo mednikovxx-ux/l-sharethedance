@@ -10,9 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="preload" as="image" href="img/hero-wide-0.jpg" media="(min-width: 701px)">
-<link rel="preload" as="image" href="img/hero-tall-0.jpg" media="(max-width: 700px)">
-<link rel="stylesheet" href="css/style.css?v=1793539121">
+<link rel="stylesheet" href="css/style.css?v=1793539946">
 </head>
 <body>
 <header class="bar">
@@ -23,11 +21,11 @@
 
 <main id="top">
   <section class="hero">
-    <video class="hero-video" autoplay preload="auto" muted loop playsinline poster="img/hero-wide-0.jpg" aria-label="Пары и солисты студии танцуют: танго на тёмной сцене, бальные танцы, бачата">
-      <source media="(max-width: 700px)" src="video/hero-tall.mp4?v=1793538875" type="video/mp4">
-      <source src="video/hero-wide.mp4?v=1793538875" type="video/mp4">
-    </video>
-    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-cols" aria-label="Пары и солисты студии танцуют: танго на тёмной сцене, бальные танцы, бачата" role="img">
+      <video class="hc" muted loop playsinline preload="auto" poster="img/col0.jpg"><source media="(max-width: 700px)" src="video/hero-tall.mp4" type="video/mp4"><source src="video/col0.mp4?v=1793539946" type="video/mp4"></video>
+      <video class="hc" muted loop playsinline preload="auto" poster="img/col1.jpg" src="video/col1.mp4?v=1793539946"></video>
+      <video class="hc" muted loop playsinline preload="auto" poster="img/col2.jpg" src="video/col2.mp4?v=1793539946"></video>
+    </div>
     <div class="hero-text">
       <h1 class="metal" id="wordmark">Share The Dance</h1>
       <div class="hero-foot">
@@ -167,6 +165,6 @@
   </div>
   <p class="endname metal" aria-hidden="true">Делимся танцем</p>
 </footer>
-<script src="js/main.js?v=1793539121"></script>
+<script src="js/main.js?v=1793539946"></script>
 </body>
 </html>

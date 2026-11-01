@@ -227,11 +227,7 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 @media (max-width: 800px) { .days { grid-template-columns: 1fr; } }
 
 /* Запуск: видео спускаются сверху по одному */
-.hero-canvas { display: none; position: absolute; inset: 0; width: 100%; height: 100%; background: #0D2A23; }
-.js .hero-canvas { display: block; }
-.hero.ready .hero-canvas { display: none; }
-.hero-drop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: drop 1.4s cubic-bezier(.22,.8,.2,1) both; }
-@keyframes drop { from { transform: translateY(-100%); } to { transform: none; } }
+.hero-cols { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .js .hero:not(.title) .hero-text { opacity: 0; transform: translateY(18px); }
 .hero .hero-text { transition: opacity .55s, transform .55s; }
 /* Видео направлений: вертикальный прямоугольник 3:4 без обрезки. Подвал: лица в кадре */
@@ -246,7 +242,6 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 .endname { z-index: 1; }
 @media (max-width: 800px) { .visit { padding-top: calc(133vw + 24px); } .visit > video { width: 100%; height: 133vw; inset: 0 0 auto; } .card { align-self: stretch; max-width: none; } }
 @media (min-width: 801px) { .visit > video { top: 78px; height: calc(100% - 78px - 12.2vw - 28px); } }
-.hero-drop { z-index: 0; }
 
 /* Направления: видео во всю высоту блока со списком */
 .stage-text { display: grid; gap: 12px; margin-top: 24px; justify-items: start; }
@@ -270,3 +265,10 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 /* Подвал ровно в экран: видео видно целиком */
 @media (min-width: 801px) { .visit { padding-top: 96px; gap: 24px; min-height: 100svh; } }
 @media (min-width: 1001px) { .menu { margin-top: 26px; } .menu button { padding-block: 7px; } .also { margin-top: 22px; } }
+
+/* Запуск: каждая колонка стартует и выезжает сверху сама */
+.hc { width: 100%; height: 100%; object-fit: cover; min-width: 0; }
+.js .hc { transform: translateY(-101%); }
+.js .hc.in { transform: none; transition: transform 1s cubic-bezier(.22,.8,.2,1); }
+.hc.hide { display: none; }
+@media (max-width: 700px) { .hero-cols { grid-template-columns: 1fr; } .hc:nth-child(n+2) { display: none; } }

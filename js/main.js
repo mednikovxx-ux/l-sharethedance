@@ -9,14 +9,22 @@ const STYLES = {
   swing: { v: "lindy", t: "Весёлый парный танец: свобода, улыбки и много движения.", w: "Алексей Шершнев" },
   jazz: { v: "jazz", t: "Джаз-фанк, контемпорари и Vogue для тех, кому хочется драйва и ритма.", w: "Мария Панова" },
 };
-const video = document.getElementById("stageVideo"), text = document.getElementById("stageText"), who = document.getElementById("stageWho");
-document.querySelectorAll(".menu button").forEach((b) => b.addEventListener("click", () => {
+// Все видео лежат стопкой и заранее загружены: наведение на направление мгновенно показывает нужное.
+const stage = document.getElementById("stageMedia");
+if (stage) {
+const text = document.getElementById("stageText"), who = document.getElementById("stageWho");
+const first = stage.querySelector("video"), vids = { tango: first };
+Object.values(STYLES).forEach((s) => { if (vids[s.v]) return; const v = document.createElement("video"); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: "auto", poster: `img/${s.v}.jpg`, src: `video/${s.v}.mp4` }); v.setAttribute("aria-hidden", "true"); stage.append(v); vids[s.v] = v; });
+let current = "tango";
+const show = (b) => {
   const s = STYLES[b.dataset.s];
   document.querySelectorAll(".menu button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   text.textContent = s.t; who.textContent = s.w;
-  video.style.opacity = 0;
-  setTimeout(() => { video.poster = `img/${s.v}.jpg`; video.src = `video/${s.v}.mp4`; video.play().catch(() => {}); video.style.opacity = 1; }, 220);
-}));
+  if (s.v === current) return;
+  vids[s.v].currentTime = 0; vids[s.v].play().catch(() => {}); vids[s.v].classList.add("on"); vids[current].classList.remove("on"); current = s.v;
+};
+document.querySelectorAll(".menu button").forEach((b) => { ["mouseenter", "focus", "click"].forEach((e) => b.addEventListener(e, () => show(b))); });
+}
 
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
 document.querySelectorAll(".rv").forEach((el, i) => { el.style.transitionDelay = `${(i % 3) * 70}ms`; io.observe(el); });
@@ -25,10 +33,9 @@ document.querySelectorAll(".rv").forEach((el, i) => { el.style.transitionDelay =
 const lazy = document.querySelector("video[data-lazy]");
 new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { lazy.src = lazy.dataset.lazy; o.disconnect(); } }, { rootMargin: "400px" }).observe(lazy);
 
-const bar = document.querySelector(".bar"), mark = document.getElementById("wordmark"), still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mark = document.getElementById("wordmark"), still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const onScroll = () => {
   const y = scrollY, h = innerHeight;
-  bar.classList.toggle("on", y > h * .7);
-  if (!still) mark.style.transform = `scale(${1 - Math.min(y / h, 1) * .12}) translateY(${-y * .12}px)`;
+  if (!still && mark) mark.style.transform = `scale(${1 - Math.min(y / h, 1) * .12}) translateY(${-y * .12}px)`;
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();

@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Share The Dance — камерная студия танца в Нижнем Новгороде</title>
 <meta name="description" content="Танго, бальные, бачата, сальса, свинг и современные танцы на Дунаева, 8. Группы до 8 человек, взрослые и дети от 3 лет. Пробное занятие от 790 ₽.">
-<link rel="icon" href="img/mark.svg">
+<link rel="icon" href="img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="bar">
-  <a class="brand" href="#top" aria-label="Share The Dance, наверх"><svg viewBox="16 4 34 60" width="20" height="35" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M26 10C14 22 16 32 32 38s18 16 6 24"/><path d="M44 11C30 7 24 18 27 27c4 10 13 14 11 27-2 8-14 12-24 7"/></svg>Share The Dance</a>
-  <nav aria-label="Разделы"><a href="#styles">Направления</a><a href="#team">Команда</a><a href="#prices">Цены</a><a href="#visit">Контакты</a></nav>
+  <a class="brand" href="#top" aria-label="Share The Dance, наверх"><img src="img/logo.png" alt="Логотип Share The Dance"></a>
+  <nav aria-label="Разделы"><a href="#styles">Направления</a><a href="#team">Команда</a><a href="#prices">Цены</a><a href="news.html">Новости</a><a href="#visit">Контакты</a></nav>
   <a class="btn btn-small" href="#visit">Пробное занятие</a>
 </header>
 
@@ -24,7 +24,7 @@
       <source src="video/hero-wide.mp4" type="video/mp4">
     </video>
     <div class="hero-text">
-      <h1 class="metal" id="wordmark">Share The Dance</h1>
+      <h1 id="wordmark"><img src="img/wordmark.png" alt="Share The Dance"></h1>
       <div class="hero-foot">
         <p>Камерная студия танца в Нижнем Новгороде: группы до 8 человек, взрослые и дети от 3 лет.</p>
         <a class="btn" href="#visit">Записаться на пробное от 790 ₽</a>
@@ -32,7 +32,7 @@
     </div>
   </section>
 
-  <section class="about wrap">
+  <section class="about wrap light">
     <img class="about-img rv" src="img/ballroom.jpg" width="540" height="720" alt="Пара на занятии по бальным танцам" loading="lazy">
     <div class="about-tile rv">
       <h2>Танцы для жизни и бизнеса</h2>
@@ -61,7 +61,7 @@
         <p class="also">Ещё растяжка, пилатес, МФР, партерная гимнастика, детские группы от 3 лет и постановка свадебного танца.</p>
       </div>
       <figure class="stage rv">
-        <video id="stageVideo" autoplay muted loop playsinline poster="img/tango.jpg" src="video/tango.mp4"></video>
+        <div class="stage-media" id="stageMedia"><video class="on" autoplay muted loop playsinline poster="img/tango.jpg" src="video/tango.mp4" aria-label="Пара танцует"></video></div>
         <figcaption>
           <p id="stageText">Близкое объятие, импровизация и разговор без слов. Партнёр не нужен: на группах в паре с вами встанет преподаватель.</p>
           <p class="who">Ведёт <b id="stageWho">Алексей Шершнев</b></p>
@@ -71,7 +71,7 @@
     </div>
   </section>
 
-  <section class="gather wrap">
+  <section class="gather wrap light">
     <img class="g1 rv" src="img/lindy.jpg" width="540" height="720" alt="Пара танцует линди-хоп на сцене" loading="lazy">
     <img class="g2 rv" src="img/lady.jpg" width="540" height="720" alt="Преподаватель в образе для бачаты леди стайл" loading="lazy">
     <div class="g-text rv">
@@ -134,7 +134,7 @@
     </div>
   </section>
 
-  <section class="faq wrap">
+  <section class="faq wrap light">
     <div class="rv">
       <h2>Частые вопросы</h2>
       <details open><summary>Нужно ли приходить с партнёром?</summary><p>Нет. На группах партнёрами выступают наши преподаватели.</p></details>
@@ -149,6 +149,7 @@
 </main>
 
 <footer class="visit" id="visit">
+  <div class="visit-in">
   <video autoplay muted loop playsinline poster="img/hero-wide.jpg" aria-hidden="true" data-lazy="video/hero-wide.mp4"></video>
   <div class="card rv">
     <h2>Приходите на пробное</h2>
@@ -159,6 +160,7 @@
       <a class="btn btn-line" href="https://wa.me/79030404721">WhatsApp</a>
     </div>
     <p class="social"><a href="https://vk.com/sharethedance">ВКонтакте</a><a href="https://yandex.ru/maps/?text=Нижний%20Новгород%2C%20улица%20Дунаева%2C%208">Как добраться</a></p>
+  </div>
   </div>
   <p class="endname metal" aria-hidden="true">Делимся танцем</p>
 </footer>

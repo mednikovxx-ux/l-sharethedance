@@ -273,3 +273,15 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 .js .hc-w.in { transform: translate3d(0, 0, 0); transition: transform 1.2s cubic-bezier(.22,.8,.2,1); }
 .js .hc-w.done { will-change: auto; transform: none; transition: none; }
 @media (max-width: 700px) { .hero-cols { grid-template-columns: 1fr; } .hc-w:nth-child(n+2) { display: none; } }
+
+/* Направления: справа колонка видео с описанием и кнопкой, слева список на ту же высоту */
+.stage-text { display: grid; grid-column: auto; gap: 10px; justify-items: start; margin-top: 16px; }
+.stage-text #stageText { flex: none; }
+.stage-text .btn { margin-left: 0; }
+@media (min-width: 1001px) {
+  .styles-in { grid-template-columns: minmax(0, 1fr) min(38vw, calc((100svh - 300px) * .75)); gap: 64px; }
+  .stage { display: block; }
+  .stage-media { flex: none; width: 100%; height: auto; aspect-ratio: 3 / 4; }
+  .styles-list { display: flex; flex-direction: column; }
+  .menu { flex: 1; align-content: space-between; }
+}

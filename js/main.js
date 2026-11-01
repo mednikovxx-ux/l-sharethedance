@@ -49,10 +49,11 @@ const hero = document.querySelector(".hero");
 if (hero) {
   const phone = innerWidth <= 700, vids = [...hero.querySelectorAll(".hc")].slice(0, phone ? 1 : 3);
   const STEP = 450, FALL = 1200, calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (phone) { vids[0].poster = "img/hero-tall-0.jpg"; vids[0].src = "video/hero-tall.mp4"; }
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const once = (v, e, ms) => Promise.race([new Promise((r) => v.addEventListener(e, r, { once: true })), wait(ms)]);
-  const buffered = (v) => (v.readyState >= 4 ? 0 : once(v, "canplaythrough", 1000));
-  const start = async (v) => { const p = once(v, "playing", 400); v.play().catch(() => {}); await p; };
+  const buffered = (v) => (v.readyState >= 3 ? 0 : once(v, "canplay", 350));
+  const start = async (v) => { const p = once(v, "playing", 150); v.play().catch(() => {}); await p; };
   const slide = (v) => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => { v.parentElement.classList.add("in"); r(); })));
   (async () => {
     if (calm) { vids.forEach((v) => { v.parentElement.classList.add("in", "done"); v.play().catch(() => {}); }); hero.classList.add("title", "ready"); return; }

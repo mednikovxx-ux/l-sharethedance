@@ -209,3 +209,19 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 /* Видео направлений начинается на уровне списка, под заголовком: вместе с кнопкой умещается в экран */
 @media (min-width: 1001px) { .stage { position: static; margin-top: clamp(150px, 12.5vw, 200px); } .stage-media { height: min(calc(100svh - 400px), 44vw); } }
 @media (max-width: 620px) { .hero::after { inset: 38% 0 0; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.74) 45%); } }
+
+/* Расписание */
+.days { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 44px; align-items: start; }
+.day { background: var(--velvet); color: #EEF1F1; padding: clamp(24px, 3vw, 40px); box-shadow: var(--lift); }
+.day.today { outline: 2px solid #AEB5B7; outline-offset: 4px; }
+.light .day h2 { color: #F3F5F5; font-size: clamp(36px, 3.6vw, 52px); }
+.light .day h2::after { background: var(--line); }
+.day ul { list-style: none; margin: 18px 0 0; padding: 0; }
+.day li { position: relative; display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 12px 0; align-items: baseline; }
+.day li + li::before { content: ""; position: absolute; inset: 0 0 auto; height: 1px; background: var(--line); opacity: .4; }
+.day time { font: 500 26px var(--serif); color: #F3F5F5; }
+.day b { display: block; font: 500 26px/1.15 var(--serif); color: #F3F5F5; }
+.day span { font-size: 18px; color: #DDE1E1; }
+.sch-cta { margin-top: 40px; }
+.social { flex-wrap: wrap; }
+@media (max-width: 800px) { .days { grid-template-columns: 1fr; } }

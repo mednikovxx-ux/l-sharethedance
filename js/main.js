@@ -40,3 +40,6 @@ const onScroll = () => {
   if (!still && mark) mark.style.transform = `scale(${1 - Math.min(y / h, 1) * .12}) translateY(${-y * .12}px)`;
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+// На странице расписания подсвечиваем сегодняшний день.
+document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");

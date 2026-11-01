@@ -44,24 +44,28 @@ addEventListener("scroll", onScroll, { passive: true }); onScroll();
 // На странице расписания подсвечиваем сегодняшний день.
 document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");
 
-// Запуск главной: каждое видео запускается и сразу выезжает сверху, следующее — за ним.
+// Запуск главной: видео запускается, через кадр его рамка выезжает сверху, следующее — за ним.
 const hero = document.querySelector(".hero");
 if (hero) {
   const phone = innerWidth <= 700, vids = [...hero.querySelectorAll(".hc")].slice(0, phone ? 1 : 3);
-  const STEP = 300, FALL = 1000, still2 = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const launch = (v) => { v.play().catch(() => {}); v.classList.add("in"); };
-  const whenReady = (v) => new Promise((res) => {
-    if (v.readyState >= 3) return res();
-    v.addEventListener("canplay", res, { once: true }); setTimeout(res, 1500);
-  });
-  if (still2) { vids.forEach((v) => { v.style.transition = "none"; launch(v); }); hero.classList.add("title", "ready"); }
-  else (async () => {
-    await Promise.all(vids.map(whenReady));
-    vids.forEach((v, i) => setTimeout(() => launch(v), i * STEP));
-    setTimeout(() => hero.classList.add("title", "ready"), (vids.length - 1) * STEP + FALL - 500);
+  const STEP = 450, FALL = 1200, calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const once = (v, e, ms) => Promise.race([new Promise((r) => v.addEventListener(e, r, { once: true })), wait(ms)]);
+  const buffered = (v) => (v.readyState >= 4 ? 0 : once(v, "canplaythrough", 2500));
+  const start = async (v) => { const p = once(v, "playing", 400); v.play().catch(() => {}); await p; };
+  const slide = (v) => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => { v.parentElement.classList.add("in"); r(); })));
+  (async () => {
+    if (calm) { vids.forEach((v) => { v.parentElement.classList.add("in", "done"); v.play().catch(() => {}); }); hero.classList.add("title", "ready"); return; }
+    await Promise.all(vids.map(buffered));
+    for (let i = 0; i < vids.length; i++) {
+      await start(vids[i]);
+      await slide(vids[i]);
+      if (i === vids.length - 1) { await wait(FALL - 600); hero.classList.add("title", "ready"); await wait(700); vids.forEach((v) => v.parentElement.classList.add("done")); }
+      else await wait(STEP);
+    }
   })();
   // Если браузер приостановил видео, продолжаем воспроизведение.
-  const resume = () => vids.forEach((v) => { if (v.paused && v.classList.contains("in") && !document.hidden) v.play().catch(() => {}); });
+  const resume = () => vids.forEach((v) => { if (v.paused && v.parentElement.classList.contains("in") && !document.hidden) v.play().catch(() => {}); });
   vids.forEach((v) => ["pause", "stalled"].forEach((e) => v.addEventListener(e, () => setTimeout(resume, 250))));
   document.addEventListener("visibilitychange", resume);
 }

@@ -33,9 +33,10 @@ document.querySelectorAll(".rv").forEach((el, i) => { el.style.transitionDelay =
 const lazy = document.querySelector("video[data-lazy]");
 new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { lazy.src = lazy.dataset.lazy; o.disconnect(); } }, { rootMargin: "400px" }).observe(lazy);
 
-const mark = document.getElementById("wordmark"), still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const bar = document.querySelector(".bar"), mark = document.getElementById("wordmark"), still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const onScroll = () => {
   const y = scrollY, h = innerHeight;
+  bar.classList.toggle("on", y > h * .7 || !mark);
   if (!still && mark) mark.style.transform = `scale(${1 - Math.min(y / h, 1) * .12}) translateY(${-y * .12}px)`;
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();

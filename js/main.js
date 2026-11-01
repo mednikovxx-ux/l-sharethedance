@@ -50,10 +50,8 @@ const hero = document.querySelector(".hero"), heroVideo = document.querySelector
 if (hero) {
   const phone = innerWidth <= 700, frame = new Image(), FALL = 1000, STEP = 300;
   frame.src = phone ? "img/hero-tall-0.jpg" : "img/hero-wide-0.jpg";
-  const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("heroCanvas"), ctx = canvas.getContext("2d");
   const dpr = Math.min(devicePixelRatio || 1, 2);
-  canvas.className = "hero-canvas"; canvas.setAttribute("aria-hidden", "true");
-  heroVideo.after(canvas);
   const size = () => { canvas.width = hero.clientWidth * dpr; canvas.height = hero.clientHeight * dpr; };
   size(); ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, canvas.width, canvas.height);
   const VW = phone ? 720 : 1920, VH = phone ? 1280 : 960, cols = phone ? [0, 720] : [0, 638, 1282, 1920];
@@ -62,7 +60,7 @@ if (hero) {
     const t0 = performance.now(), W = canvas.width, H = canvas.height, k = Math.max(W / VW, H / VH), ox = (W - VW * k) / 2, oy = (H - VH * k) / 2;
     const total = FALL + (cols.length - 2) * STEP;
     const draw = (now) => {
-      const src = heroVideo.readyState >= 2 ? heroVideo : frame, t = now - t0;
+      const src = heroVideo.readyState >= 2 && heroVideo.currentTime > 0 ? heroVideo : frame, t = now - t0;
       ctx.fillStyle = "#0D2A23"; ctx.fillRect(0, 0, W, H);
       for (let i = 0; i < cols.length - 1; i++) {
         const p = ease(Math.min(1, Math.max(0, (t - i * STEP) / FALL)));
@@ -74,12 +72,12 @@ if (hero) {
     };
     requestAnimationFrame(draw);
   };
-  // Стартуем сразу: первый кадр уже загружен, а видео подхватывается на лету.
+  // Стартуем, как только видео реально пошло, но не позже чем через 1,5 секунды.
   let started = false; const go = () => { if (!started) { started = true; run(); } };
   heroVideo.addEventListener("playing", go, { once: true });
   heroVideo.play().catch(() => {});
-  frame.onload = () => setTimeout(go, 150);
-  setTimeout(go, 500);
+  heroVideo.addEventListener("timeupdate", go, { once: true });
+  setTimeout(go, 1500);
   // Если браузер приостановил видео или ему не хватило загрузки, продолжаем воспроизведение.
   ["pause", "stalled", "waiting"].forEach((e) => heroVideo.addEventListener(e, () => setTimeout(() => { if (heroVideo.paused && !document.hidden) heroVideo.play().catch(() => {}); }, 250)));
   document.addEventListener("visibilitychange", () => { if (!document.hidden) heroVideo.play().catch(() => {}); });

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share The Dance — камерная студия танца в Нижнем Новгороде</title>
+<meta name="description" content="Танго, бальные, бачата, сальса, свинг и современные танцы на Дунаева, 8. Группы до 8 человек, взрослые и дети от 3 лет. Пробное занятие от 790 ₽.">
+<link rel="icon" href="img/mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="#top" aria-label="Share The Dance, наверх"><svg viewBox="16 4 34 60" width="20" height="35" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M26 10C14 22 16 32 32 38s18 16 6 24"/><path d="M44 11C30 7 24 18 27 27c4 10 13 14 11 27-2 8-14 12-24 7"/></svg>Share The Dance</a>
+  <nav aria-label="Разделы"><a href="#styles">Направления</a><a href="#team">Команда</a><a href="#prices">Цены</a><a href="#visit">Контакты</a></nav>
+  <a class="btn btn-small" href="#visit">Пробное занятие</a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="img/hero-wide.jpg" aria-label="Пары и солисты студии танцуют: танго на тёмной сцене, бальные танцы, бачата">
+      <source media="(max-width: 700px)" src="video/hero-tall.mp4" type="video/mp4">
+      <source src="video/hero-wide.mp4" type="video/mp4">
+    </video>
+    <div class="hero-text">
+      <h1 class="metal" id="wordmark">Share The Dance</h1>
+      <div class="hero-foot">
+        <p>Камерная студия танца в Нижнем Новгороде: группы до 8 человек, взрослые и дети от 3 лет.</p>
+        <a class="btn" href="#visit">Записаться на пробное от 790 ₽</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about wrap">
+    <img class="about-img rv" src="img/ballroom.jpg" width="540" height="720" alt="Пара на занятии по бальным танцам" loading="lazy">
+    <div class="about-tile rv">
+      <h2>Танцы для жизни и бизнеса</h2>
+      <p>Студию ведут Полина и Алексей. Здесь чисто, немноголюдно, всегда есть кофе, а в маленькой группе преподаватель видит каждого.</p>
+    </div>
+    <dl class="facts rv">
+      <div><dt>до 8</dt><dd>человек в мини-группе</dd></div>
+      <div><dt>2 зала</dt><dd>на Дунаева, 8</dd></div>
+      <div><dt>30+ лет</dt><dd>в танце у основателя</dd></div>
+      <div><dt>9:00–22:00</dt><dd>каждый день</dd></div>
+    </dl>
+  </section>
+
+  <section class="styles" id="styles">
+    <div class="wrap styles-in">
+      <div class="styles-list rv">
+        <h2>Выберите свой танец</h2>
+        <div class="menu" role="group" aria-label="Направления">
+          <button type="button" aria-pressed="true" data-s="tango"><span>Аргентинское танго</span><small>в паре</small></button>
+          <button type="button" aria-pressed="false" data-s="ballroom"><span>Бальные и American Smooth</span><small>в паре</small></button>
+          <button type="button" aria-pressed="false" data-s="bachata"><span>Бачата, сальса, кизомба</span><small>в паре</small></button>
+          <button type="button" aria-pressed="false" data-s="lady"><span>Леди стайл</span><small>соло</small></button>
+          <button type="button" aria-pressed="false" data-s="swing"><span>Свинг и линди-хоп</span><small>в паре</small></button>
+          <button type="button" aria-pressed="false" data-s="jazz"><span>Современные и джаз-фанк</span><small>соло</small></button>
+        </div>
+        <p class="also">Ещё растяжка, пилатес, МФР, партерная гимнастика, детские группы от 3 лет и постановка свадебного танца.</p>
+      </div>
+      <figure class="stage rv">
+        <video id="stageVideo" autoplay muted loop playsinline poster="img/tango.jpg" src="video/tango.mp4"></video>
+        <figcaption>
+          <p id="stageText">Близкое объятие, импровизация и разговор без слов. Партнёр не нужен: на группах в паре с вами встанет преподаватель.</p>
+          <p class="who">Ведёт <b id="stageWho">Алексей Шершнев</b></p>
+          <a class="btn" id="stageLink" href="https://t.me/share_the_dance">Записаться на этот танец</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="gather wrap">
+    <img class="g1 rv" src="img/lindy.jpg" width="540" height="720" alt="Пара танцует линди-хоп на сцене" loading="lazy">
+    <img class="g2 rv" src="img/lady.jpg" width="540" height="720" alt="Преподаватель в образе для бачаты леди стайл" loading="lazy">
+    <div class="g-text rv">
+      <h2>Что видят все и что происходит</h2>
+      <p>Со стороны это модное хобби. Изнутри вы уезжаете счастливее, чем приехали: на полтора часа не проверяете рабочие чаты, забываете о тревоге, уделяете время себе и знакомитесь с новыми людьми.</p>
+    </div>
+    <img class="g3 rv" src="img/hero-tall.jpg" width="720" height="1280" alt="Пара танцует танго на тёмной сцене в луче света" loading="lazy">
+    <img class="g4 rv" src="img/jazz.jpg" width="540" height="720" alt="Преподаватель танцует джаз-фанк" loading="lazy">
+  </section>
+
+  <section class="team" id="team">
+    <div class="wrap team-in">
+      <div class="team-head rv">
+        <h2>Вас ведут мастера</h2>
+        <img src="img/team.jpg" width="906" height="250" alt="Команда преподавателей Share The Dance" loading="lazy">
+      </div>
+      <ul class="people">
+        <li class="rv"><b>Алексей Шершнев</b><span>Танго, American Smooth, бальные, свинг. Сооснователь студии, двукратный финалист Кубка Мира по American Smooth среди профессионалов, преподавал в центре Лондона.</span></li>
+        <li class="rv"><b>Илья Левай</b><span>Партерная гимнастика и хореография. 10 лет в труппе Мариинского театра, сейчас на сцене Нижегородского театра оперы и балета.</span></li>
+        <li class="rv"><b>Дмитрий Кольчугин</b><span>Бальные танцы и брейк-данс. Мастер спорта, танцор международного класса.</span></li>
+        <li class="rv"><b>Мария Панова</b><span>Джаз-фанк, контемпорари, Vogue. Член сборной России, участница чемпионатов мира.</span></li>
+        <li class="rv"><b>Иван Горюнов</b><span>Парная бачата, сальса, кизомба. Быстро научит красиво вести в паре.</span></li>
+        <li class="rv"><b>Алина Кабернюк</b><span>Бачата и леди стайл. Призёр международных турниров, 12 лет преподавания.</span></li>
+        <li class="rv"><b>Алёна Баранова</b><span>Соло латина и женское здоровье. Финалистка чемпионата России, инструктор хатха-йоги.</span></li>
+        <li class="rv"><b>Ульяна Железнякова</b><span>Бачата леди стайл, Bodysculpt, контемпорари.</span></li>
+        <li class="rv"><b>Оля Макарушина</b><span>Женский стиль в бачате, 13 лет в танце.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="prices" id="prices">
+    <svg class="waves" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M-40 120C260 40 520 90 640 240s40 300 240 360 420-20 620 80"/><path d="M-40 180C240 110 480 150 590 290s60 300 270 370 400 0 620 90"/><path d="M-40 240C220 180 440 210 540 340s80 300 300 380 380 30 620 100"/><path d="M1480 60C1180 10 980 70 900 220S760 520 520 600 120 620-40 760"/></g></svg>
+    <div class="wrap">
+      <h2 class="rv">Цены</h2>
+      <div class="price-grid">
+        <section class="rv"><h3>Группы, взрослые</h3><dl>
+          <div><dt>Пробное</dt><dd>790 ₽</dd></div><div><dt>Разовое</dt><dd>1 200 ₽</dd></div>
+          <div><dt>6 занятий, 35 дней</dt><dd>5 940 ₽</dd></div><div><dt>8 занятий, 45 дней</dt><dd>7 480 ₽</dd></div><div><dt>12 занятий, 50 дней</dt><dd>10 200 ₽</dd></div></dl></section>
+        <section class="rv"><h3>Группы по 90 минут</h3><dl>
+          <div><dt>Пробное</dt><dd>1 000 ₽</dd></div><div><dt>Разовое</dt><dd>1 800 ₽</dd></div>
+          <div><dt>4 занятия в паре, 35 дней</dt><dd>5 940 ₽</dd></div><div><dt>8 занятий в паре, 50 дней</dt><dd>10 200 ₽</dd></div><div><dt>8 занятий, 45 дней</dt><dd>10 920 ₽</dd></div></dl></section>
+        <section class="rv"><h3>Дети до 12 лет</h3><dl>
+          <div><dt>Пробное</dt><dd>590 ₽</dd></div><div><dt>Разовое</dt><dd>900 ₽</dd></div>
+          <div><dt>4 занятия, 35 дней</dt><dd>3 100 ₽</dd></div><div><dt>8 занятий, 45 дней</dt><dd>5 500 ₽</dd></div><div><dt>12 занятий, 50 дней</dt><dd>7 600 ₽</dd></div></dl></section>
+        <section class="rv"><h3>Индивидуально</h3><dl>
+          <div><dt>Пробное</dt><dd>1 500 ₽</dd></div><div><dt>Разовое</dt><dd>3 990 ₽</dd></div>
+          <div><dt>3 занятия, 30 дней</dt><dd>10 800 ₽</dd></div><div><dt>6 занятий, 40 дней</dt><dd>20 400 ₽</dd></div><div><dt>9 занятий, 50 дней</dt><dd>28 800 ₽</dd></div></dl></section>
+      </div>
+      <p class="note rv">Цены на абонементы действуют при покупке в день пробного занятия или при продлении, когда осталось 1–2 занятия. Прайс с 1 января 2026 года.</p>
+    </div>
+  </section>
+
+  <section class="voice wrap">
+    <img class="rv" src="img/tango.jpg" width="540" height="720" alt="Пара в объятии аргентинского танго" loading="lazy">
+    <div class="rv">
+      <h2>Что говорят ученики</h2>
+      <blockquote><p>Спасибо вам за то, что есть такое тёплое, уютное место! Ходим с дочкой на пару и очень нравится обеим. У вас очень комфортно и вкусный кофе.</p><footer>Олеся Попова</footer></blockquote>
+      <blockquote class="small"><p>Классная студия для взрослых, как новичков, так и продвинутых танцоров. Гибкость подхода и ощущение уюта бесценны!</p><footer>Евгения Кравченко</footer></blockquote>
+      <blockquote class="small"><p>Поставили нам танец за 8 занятий! А мы вообще не из танцующих.</p><footer>Евгения Олеговна</footer></blockquote>
+    </div>
+  </section>
+
+  <section class="faq wrap">
+    <div class="rv">
+      <h2>Частые вопросы</h2>
+      <details open><summary>Нужно ли приходить с партнёром?</summary><p>Нет. На группах партнёрами выступают наши преподаватели.</p></details>
+      <details><summary>Я никогда не танцевал. Мне можно?</summary><p>Да, у нас занимаются и новички, и продвинутые танцоры. Начните с пробного занятия.</p></details>
+      <details><summary>Какие бывают форматы?</summary><p>Групповые занятия до 8 человек и индивидуальные. Индивидуальное время подбираем под вас.</p></details>
+      <details><summary>Можно поставить свадебный танец?</summary><p>Да, ставим свадебные и конкурсные номера. Одной из групп хватило 8 занятий.</p></details>
+      <details><summary>Есть ли занятия для детей?</summary><p>Да, детские группы от 3 лет. Пока ребёнок занимается, родители могут выпить кофе в зоне ожидания.</p></details>
+      <details><summary>Можно арендовать зал?</summary><p>Да, напишите нам: подскажем свободное время.</p></details>
+    </div>
+    <img class="rv" src="img/bachata.jpg" width="540" height="720" alt="Пара танцует бачату" loading="lazy">
+  </section>
+</main>
+
+<footer class="visit" id="visit">
+  <video autoplay muted loop playsinline poster="img/hero-wide.jpg" aria-hidden="true" data-lazy="video/hero-wide.mp4"></video>
+  <div class="card rv">
+    <h2>Приходите на пробное</h2>
+    <p>Напишите нам: подберём группу и время.</p>
+    <address>Нижний Новгород, ул. Дунаева, 8<br>Каждый день, 9:00–22:00<br><a href="tel:+79030404721">+7 903 040-47-21</a></address>
+    <div class="links">
+      <a class="btn" href="https://t.me/share_the_dance">Написать в Telegram</a>
+      <a class="btn btn-line" href="https://wa.me/79030404721">WhatsApp</a>
+    </div>
+    <p class="social"><a href="https://vk.com/sharethedance">ВКонтакте</a><a href="https://yandex.ru/maps/?text=Нижний%20Новгород%2C%20улица%20Дунаева%2C%208">Как добраться</a></p>
+  </div>
+  <p class="endname metal" aria-hidden="true">Делимся танцем</p>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -15,7 +15,7 @@ if (stage) {
 const text = document.getElementById("stageText"), who = document.getElementById("stageWho");
 const first = stage.querySelector("video"), vids = { tango: first };
 // Видео направлений грузим, только когда до них дошли: на первом экране канал нужен героям.
-Object.values(STYLES).forEach((s) => { if (vids[s.v]) return; const v = document.createElement("video"); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: "none", poster: `img/${s.v}.jpg` }); v.dataset.src = `video/${s.v}.mp4`; v.setAttribute("aria-hidden", "true"); stage.append(v); vids[s.v] = v; });
+Object.values(STYLES).forEach((s) => { if (vids[s.v]) return; const v = document.createElement("video"); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: "none", poster: `img/${s.v}.webp` }); v.dataset.src = `video/${s.v}.mp4`; v.setAttribute("aria-hidden", "true"); stage.append(v); vids[s.v] = v; });
 const load = (v) => { if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.preload = "auto"; } };
 new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); load(first); first.play().catch(() => {}); Object.values(vids).forEach(load); } }, { rootMargin: "200px" }).observe(stage);
 let current = "tango";
@@ -56,7 +56,7 @@ const hero = document.querySelector(".hero");
 if (hero) {
   const phone = innerWidth <= 700, vids = [...hero.querySelectorAll(".hc")].slice(0, phone ? 1 : 3);
   const STEP = 450, FALL = 1200, calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (phone) { vids[0].poster = "img/hero-tall-0.jpg"; vids[0].src = "video/hero-tall.mp4"; }
+  if (phone) { vids[0].poster = "img/hero-tall-0.webp"; vids[0].src = "video/hero-tall.mp4"; }
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const once = (v, e, ms) => Promise.race([new Promise((r) => v.addEventListener(e, r, { once: true })), wait(ms)]);
   const buffered = (v) => (v.readyState >= 3 ? 0 : once(v, "canplay", 350));

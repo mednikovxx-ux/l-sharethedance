@@ -336,3 +336,15 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
   .stage-text .btn { padding: 11px 18px; font-size: 17px; white-space: nowrap; }
 }
 @media (min-width: 1001px) { .stage { top: 0; } }
+
+/* Меню на телефоне и планшете */
+.burger { display: none; all: unset; }
+.burger { display: none; cursor: pointer; padding: 10px 12px; color: #F3F5F5; font-size: 17px; margin-left: auto; }
+.burger:focus-visible { outline: 2px solid var(--silver); }
+@media (max-width: 1000px) {
+  .burger { display: block; }
+  .bar .btn-small { margin-left: 0; }
+  .bar.open { background: var(--deep); }
+  .bar.open nav { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 8px var(--m) 20px; background: var(--deep); box-shadow: var(--lift); }
+  .bar.open nav a { padding: 12px 0; font-size: 20px; }
+}

@@ -44,6 +44,11 @@ const onScroll = () => {
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
+// Меню на телефоне.
+const burger = document.querySelector(".burger");
+burger.addEventListener("click", () => { const o = document.querySelector(".bar").classList.toggle("open"); burger.setAttribute("aria-expanded", o); });
+document.querySelectorAll("#siteNav a").forEach((a) => a.addEventListener("click", () => { document.querySelector(".bar").classList.remove("open"); burger.setAttribute("aria-expanded", false); }));
+
 // Расписание: сегодняшний столбец и фильтр «взрослым / детям».
 document.querySelectorAll(`.tt [data-day="${new Date().getDay()}"]`).forEach((el) => el.classList.add("today"));
 document.querySelectorAll(".filter button").forEach((b) => b.addEventListener("click", () => {
@@ -59,7 +64,7 @@ if (hero) {
   if (phone) { vids[0].poster = "img/hero-tall-0.webp"; vids[0].src = "video/hero-tall.mp4"; }
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const once = (v, e, ms) => Promise.race([new Promise((r) => v.addEventListener(e, r, { once: true })), wait(ms)]);
-  const buffered = (v) => (v.readyState >= 3 ? 0 : once(v, "canplay", 350));
+  const buffered = (v) => (v.readyState >= 4 ? 0 : once(v, "canplaythrough", 900));
   const start = async (v) => { const p = once(v, "playing", 150); v.play().catch(() => {}); await p; };
   const slide = (v) => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => { v.parentElement.classList.add("in"); r(); })));
   (async () => {

@@ -14,14 +14,17 @@ const stage = document.getElementById("stageMedia");
 if (stage) {
 const text = document.getElementById("stageText"), who = document.getElementById("stageWho");
 const first = stage.querySelector("video"), vids = { tango: first };
-Object.values(STYLES).forEach((s) => { if (vids[s.v]) return; const v = document.createElement("video"); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: "auto", poster: `img/${s.v}.jpg`, src: `video/${s.v}.mp4` }); v.setAttribute("aria-hidden", "true"); stage.append(v); vids[s.v] = v; });
+// Видео направлений грузим, только когда до них дошли: на первом экране канал нужен героям.
+Object.values(STYLES).forEach((s) => { if (vids[s.v]) return; const v = document.createElement("video"); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: "none", poster: `img/${s.v}.jpg` }); v.dataset.src = `video/${s.v}.mp4`; v.setAttribute("aria-hidden", "true"); stage.append(v); vids[s.v] = v; });
+const load = (v) => { if (!v.src && v.dataset.src) { v.src = v.dataset.src; v.preload = "auto"; } };
+new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); load(first); first.play().catch(() => {}); Object.values(vids).forEach(load); } }, { rootMargin: "200px" }).observe(stage);
 let current = "tango";
 const show = (b) => {
   const s = STYLES[b.dataset.s];
   document.querySelectorAll(".menu button").forEach((x) => x.setAttribute("aria-pressed", x === b));
   text.textContent = s.t; who.textContent = s.w;
   if (s.v === current) return;
-  vids[s.v].currentTime = 0; vids[s.v].play().catch(() => {}); vids[s.v].classList.add("on"); vids[current].classList.remove("on"); current = s.v;
+  load(vids[s.v]); vids[s.v].currentTime = 0; vids[s.v].play().catch(() => {}); vids[s.v].classList.add("on"); vids[current].classList.remove("on"); vids[current].pause(); current = s.v;
 };
 document.querySelectorAll(".menu button").forEach((b) => { ["mouseenter", "focus", "click"].forEach((e) => b.addEventListener(e, () => show(b))); });
 }
@@ -41,8 +44,12 @@ const onScroll = () => {
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-// На странице расписания подсвечиваем сегодняшний день.
-document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add("today");
+// Расписание: сегодняшний столбец и фильтр «взрослым / детям».
+document.querySelectorAll(`.tt [data-day="${new Date().getDay()}"]`).forEach((el) => el.classList.add("today"));
+document.querySelectorAll(".filter button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".filter button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  document.querySelectorAll(".c, .row-c").forEach((el) => { el.hidden = b.dataset.f !== "all" && el.dataset.k !== b.dataset.f; });
+}));
 
 // Запуск главной: видео запускается, через кадр его рамка выезжает сверху, следующее — за ним.
 const hero = document.querySelector(".hero");

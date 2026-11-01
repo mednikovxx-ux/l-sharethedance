@@ -9,7 +9,7 @@
 <link rel="icon" href="img/mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1793540341">
+<link rel="stylesheet" href="css/style.css?v=1793540481">
 </head>
 <body>
 <header class="bar">
@@ -20,14 +20,17 @@
 
 <main class="news-page wrap light">
   <h1>Расписание</h1>
-  <p>Группы, о которых студия объявляла этой осенью. Время может меняться, поэтому точное место подтвердим при записи.</p>
-  <div class="days">
-    <section class="day rv" data-day="1"><h2>Понедельник</h2><ul><li class="kid"><time>17:00</time><div><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></li><li class="kid"><time>18:00</time><div><b>Современные танцы</b><span>дети 8–12 лет</span></div></li><li><time>19:00</time><div><b>Карибский микс соло</b><span>Алексей</span></div></li><li><time>19:00</time><div><b>Пилатес</b><span>Дарья</span></div></li><li><time>20:00</time><div><b>Соло латина</b><span>Дарья К.</span></div></li></ul></section>
-    <section class="day rv" data-day="3"><h2>Среда</h2><ul><li class="kid"><time>17:00</time><div><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></li></ul></section>
-    <section class="day rv" data-day="4"><h2>Четверг</h2><ul><li><time>—</time><div><b>Группа Вани и Ульяны</b><span>время уточняйте, осталась пара мест</span></div></li></ul></section>
-    <section class="day rv" data-day="5"><h2>Пятница</h2><ul><li><time>18:00</time><div><b>Бачата леди, продолжающие</b><span>Алина, от 6 месяцев занятий</span></div></li><li class="kid"><time>18:00</time><div><b>Современные танцы</b><span>дети 8–12 лет</span></div></li></ul></section>
-    <section class="day rv" data-day="0"><h2>Воскресенье</h2><ul><li><time>15:30</time><div><b>Соло ледис денс</b><span>Алина</span></div></li><li class="kid"><time>17:00</time><div><b>Театральная мастерская</b><span>дети 7–12 лет, до 19:00</span></div></li></ul></section>
-  </div>
+  <p>Группы, о которых студия объявляла этой осенью. Время может меняться, поэтому место подтвердим при записи.</p>
+  <div class="filter" role="group" aria-label="Показать"><button type="button" aria-pressed="true" data-f="all">Все</button><button type="button" aria-pressed="false" data-f="adult">Взрослым</button><button type="button" aria-pressed="false" data-f="kid">Детям</button></div>
+  <div class="tt-box rv"><table class="tt"><thead><tr><th scope="col">Время</th><th scope="col" data-day="1">Пн</th><th scope="col" data-day="3">Ср</th><th scope="col" data-day="5">Пт</th><th scope="col" data-day="0">Вс</th></tr></thead><tbody>
+<tr><th scope="row">15:30</th><td data-day="1"></td><td data-day="3"></td><td data-day="5"></td><td data-day="0"><div class="c adult" data-k="adult"><b>Соло ледис денс</b><span>Алина</span></div></td></tr>
+<tr><th scope="row">17:00</th><td data-day="1"><div class="c kid" data-k="kid"><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></td><td data-day="3"><div class="c kid" data-k="kid"><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></td><td data-day="5"></td><td data-day="0"><div class="c kid" data-k="kid"><b>Театральная мастерская</b><span>дети 7–12 лет, до 19:00</span></div></td></tr>
+<tr><th scope="row">18:00</th><td data-day="1"><div class="c kid" data-k="kid"><b>Современные танцы</b><span>дети 8–12 лет</span></div></td><td data-day="3"></td><td data-day="5"><div class="c kid" data-k="kid"><b>Современные танцы</b><span>дети 8–12 лет</span></div><div class="c adult" data-k="adult"><b>Бачата леди, продолжающие</b><span>Алина</span></div></td><td data-day="0"></td></tr>
+<tr><th scope="row">19:00</th><td data-day="1"><div class="c adult" data-k="adult"><b>Карибский микс соло</b><span>Алексей</span></div><div class="c adult" data-k="adult"><b>Пилатес</b><span>Дарья</span></div></td><td data-day="3"></td><td data-day="5"></td><td data-day="0"></td></tr>
+<tr><th scope="row">20:00</th><td data-day="1"><div class="c adult" data-k="adult"><b>Соло латина</b><span>Дарья К.</span></div></td><td data-day="3"></td><td data-day="5"></td><td data-day="0"></td></tr>
+</tbody></table></div>
+  <div class="tt-list"><section data-day="1"><h2>Понедельник</h2><div class="row-c" data-k="kid"><time>17:00</time><div class="c kid" data-k="kid"><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></div><div class="row-c" data-k="kid"><time>18:00</time><div class="c kid" data-k="kid"><b>Современные танцы</b><span>дети 8–12 лет</span></div></div><div class="row-c" data-k="adult"><time>19:00</time><div class="c adult" data-k="adult"><b>Карибский микс соло</b><span>Алексей</span></div></div><div class="row-c" data-k="adult"><time>19:00</time><div class="c adult" data-k="adult"><b>Пилатес</b><span>Дарья</span></div></div><div class="row-c" data-k="adult"><time>20:00</time><div class="c adult" data-k="adult"><b>Соло латина</b><span>Дарья К.</span></div></div></section><section data-day="3"><h2>Среда</h2><div class="row-c" data-k="kid"><time>17:00</time><div class="c kid" data-k="kid"><b>Танцевальная гимнастика</b><span>дети 3–5 лет</span></div></div></section><section data-day="5"><h2>Пятница</h2><div class="row-c" data-k="kid"><time>18:00</time><div class="c kid" data-k="kid"><b>Современные танцы</b><span>дети 8–12 лет</span></div></div><div class="row-c" data-k="adult"><time>18:00</time><div class="c adult" data-k="adult"><b>Бачата леди, продолжающие</b><span>Алина</span></div></div></section><section data-day="0"><h2>Воскресенье</h2><div class="row-c" data-k="adult"><time>15:30</time><div class="c adult" data-k="adult"><b>Соло ледис денс</b><span>Алина</span></div></div><div class="row-c" data-k="kid"><time>17:00</time><div class="c kid" data-k="kid"><b>Театральная мастерская</b><span>дети 7–12 лет, до 19:00</span></div></div></section></div>
+  <p class="sch-note">Ещё по четвергам идёт группа Вани и Ульяны: осталась пара мест, время уточняйте при записи.</p>
   <p class="sch-cta"><a class="btn" href="https://t.me/share_the_dance">Записаться на занятие</a></p>
 </main>
 
@@ -45,6 +48,6 @@
   </div>
   <p class="endname metal" aria-hidden="true">Делимся танцем</p>
 </footer>
-<script src="js/main.js?v=1793540341"></script>
+<script src="js/main.js?v=1793540481"></script>
 </body>
 </html>

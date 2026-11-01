@@ -326,3 +326,12 @@ h2::after { content: ""; display: block; width: min(320px, 70%); height: 1px; ma
 .row-c .c { margin: 0; }
 .sch-note { margin-top: 22px; }
 @media (max-width: 800px) { .tt-box { display: none; } .tt-list { display: block; } }
+/* Направления: большой прямоугольник 3:4 на высоту экрана, описание и кнопка плашкой внутри него */
+@media (min-width: 1001px) {
+  .styles-in { grid-template-columns: minmax(0, 1fr) min(42vw, calc((100svh - 100px) * .75)); align-items: stretch; }
+  .stage { position: relative; display: block; }
+  .stage-text { position: absolute; left: 14px; right: 14px; bottom: 14px; margin: 0; padding: 14px 18px; background: var(--ground); box-shadow: var(--lift); display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; }
+  .stage-text #stageText { grid-column: 1 / -1; font-size: 17px; line-height: 1.35; }
+  .stage-text .who { font-size: 17px; line-height: 1.25; }
+  .stage-text .btn { padding: 11px 18px; font-size: 17px; white-space: nowrap; }
+}

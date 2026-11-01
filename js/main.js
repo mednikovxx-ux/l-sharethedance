@@ -48,7 +48,7 @@ document.querySelector(`.day[data-day="${new Date().getDay()}"]`)?.classList.add
 // Все колонки рисуются на холсте из одного идущего видео, поэтому они играют уже в полёте и не расходятся.
 const hero = document.querySelector(".hero"), heroVideo = document.querySelector(".hero-video");
 if (hero) {
-  const phone = innerWidth <= 700, frame = new Image(), FALL = 1400, STEP = 600;
+  const phone = innerWidth <= 700, frame = new Image(), FALL = 1000, STEP = 300;
   frame.src = phone ? "img/hero-tall-0.jpg" : "img/hero-wide-0.jpg";
   const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
   const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -68,14 +68,19 @@ if (hero) {
         const p = ease(Math.min(1, Math.max(0, (t - i * STEP) / FALL)));
         if (p > 0) ctx.drawImage(src, cols[i], 0, cols[i + 1] - cols[i], VH, ox + cols[i] * k, oy - (1 - p) * H, (cols[i + 1] - cols[i]) * k, VH * k);
       }
+      if (t > total - 500) hero.classList.add("title");
       if (t < total) requestAnimationFrame(draw);
-      else { hero.classList.add("ready"); setTimeout(() => canvas.remove(), 400); }
+      else { hero.classList.add("ready"); heroVideo.play().catch(() => {}); setTimeout(() => canvas.remove(), 150); }
     };
     requestAnimationFrame(draw);
   };
-  // Ждём, пока видео реально пойдёт; если сеть медленная, начинаем с первого кадра и подхватываем видео на лету.
+  // Стартуем сразу: первый кадр уже загружен, а видео подхватывается на лету.
   let started = false; const go = () => { if (!started) { started = true; run(); } };
   heroVideo.addEventListener("playing", go, { once: true });
   heroVideo.play().catch(() => {});
-  setTimeout(go, 2500);
+  frame.onload = () => setTimeout(go, 150);
+  setTimeout(go, 500);
+  // Если браузер приостановил видео или ему не хватило загрузки, продолжаем воспроизведение.
+  ["pause", "stalled", "waiting"].forEach((e) => heroVideo.addEventListener(e, () => setTimeout(() => { if (heroVideo.paused && !document.hidden) heroVideo.play().catch(() => {}); }, 250)));
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) heroVideo.play().catch(() => {}); });
 }
